@@ -61,7 +61,25 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class MyAppState extends ChangeNotifier {}
+class MyAppState extends ChangeNotifier {
+  double currentSpend = 0;
+  int currentWeek = 0;
+
+  void getCurrentSpend() {
+    //Thing
+    notifyListeners();
+  }
+
+  void updateCurrentSpend(double amount) {
+    currentSpend += amount;
+    notifyListeners();
+  }
+
+  int getCurrentWeek() {
+    //Thing
+    return currentWeek;
+  }
+}
 
 class _TitleBox extends StatelessWidget {
   @override
@@ -83,3 +101,5 @@ class _TitleBox extends StatelessWidget {
     );
   }
 }
+
+class _DisplayBox extends StatefulWidget {}
