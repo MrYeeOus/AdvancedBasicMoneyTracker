@@ -43,13 +43,11 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: Column(children: [
+          const SizedBox(height: 25),
           _TitleBox(),
-          const SizedBox(height: 50),
-          Container(
-            color: Colors.amber,
-            height: 50,
-          ),
-          const SizedBox(height: 50),
+          //
+          _DisplayBox(),
+          //
           Container(
             color: Colors.amber,
             height: 50,
@@ -86,7 +84,7 @@ class _TitleBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Padding(
-        padding: EdgeInsets.all(50.0),
+        padding: EdgeInsets.all(25.0),
         child: Column(
           children: [
             Text("Advanced Really Basic Money Tracker",
@@ -102,4 +100,33 @@ class _TitleBox extends StatelessWidget {
   }
 }
 
-class _DisplayBox extends StatefulWidget {}
+class _DisplayBox extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+    var currentSpend = appState.currentSpend.toString();
+    return Padding(
+      padding: const EdgeInsets.all(25.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        child: Column(children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("Total This Week: "),
+              Text("\$" + currentSpend),
+            ],
+          ),
+          SizedBox(height: 30),
+          Container(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () => {},
+              child: Text("Poot!"),
+            ),
+          ),
+        ]),
+      ),
+    );
+  }
+}
