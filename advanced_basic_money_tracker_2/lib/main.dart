@@ -61,18 +61,6 @@ class MyApp extends StatelessWidget {
         home: LoadingScreen(),
       ),
     );
-
-    // return ChangeNotifierProvider(
-    //   create: (context) => MyAppState(),
-    //   child: MaterialApp(
-    //     title: "AdvancedBasicMoneyTracker V2",
-    //     theme: ThemeData(
-    //       useMaterial3: true,
-    //       colorScheme: ColorScheme.fromSeed(seedColor: Colors.purpleAccent),
-    //     ),
-    //     home: LoadingScreen(),
-    //   ),
-    // );
   }
 }
 
@@ -101,11 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
           InputBox(),
           //
           WeekListBox(),
-          Container(
-            color: Colors.amber,
-            height: 50,
-          ),
-          const SizedBox(height: 25),
         ]),
       );
     });
@@ -134,10 +117,26 @@ class _TitleBox extends StatelessWidget {
 }
 
 class _DisplayBox extends StatelessWidget {
+  Future<void> _selectDate(BuildContext context) async {
+    var csvState = Provider.of<CSVState>(context, listen: false);
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: csvState.pickedDate,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2050),
+    );
+
+    if (picked != null) {
+      csvState.setPickedDate(picked);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
+    var csvState = context.watch<CSVState>();
     var currentSpend = appState.currentSpend.toString();
+
     return Padding(
       padding: const EdgeInsets.all(25.0),
       child: Container(
@@ -154,8 +153,10 @@ class _DisplayBox extends StatelessWidget {
           Container(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () => {},
-              child: Text("Poot!"),
+              onPressed: () => {
+                _selectDate(context),
+              },
+              child: Text("Week ${csvState.currentWeek}"),
             ),
           ),
         ]),

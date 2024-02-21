@@ -17,7 +17,7 @@ class WeekListBox extends StatelessWidget {
           for (dynamic item in CSVData)
             Center(
               child: Container(
-                height: 50,
+                height: 30,
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: Center(
                     child: Row(

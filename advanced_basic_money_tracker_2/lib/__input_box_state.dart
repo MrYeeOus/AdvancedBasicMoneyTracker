@@ -66,9 +66,11 @@ class _InputBoxState extends State<InputBox> {
                         if (_formKey.currentState!.validate()) {
                           //Process data
                           print(textController.text);
-                          appState.updateCurrentSpend(
-                              double.tryParse(textController.text) ?? 0.0);
-                          csvState.updateCSVListData(0, 10.0);
+                          double getVal =
+                              double.tryParse(textController.text) ?? 0.0;
+                          appState.updateCurrentSpend(getVal);
+                          csvState.updateCSVListData(
+                              csvState.currentWeek - 1, appState.currentSpend);
                           textController.clear();
                         }
                       },
