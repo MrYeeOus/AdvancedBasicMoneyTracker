@@ -19,21 +19,34 @@ class CSVState extends ChangeNotifier {
 
 Future<void> startupCheck(BuildContext context) async {
   final directory = await getApplicationDocumentsDirectory();
-  final path = directory.path;
+  final path = "${directory.path}/AdvancedBasicMoneyTracker_V2";
   final file = File('$path/abmt.csv');
-  print("File is at: ");
-  print(file.toString);
+  // print("File is at: ");
+  // print(file.toString);
+  // print(path.toString());
+  // print(directory.toString());
   CSVState csvState = Provider.of<CSVState>(context, listen: false);
 
-  if (await file.exists()) {
-    //Read file
-  } else {
-    //List of List<dynamic> === List of list of any types
-    // List.generate(52 elements, Week x + empty)
+  void fileStuff() async {
+    if (await file.exists()) {
+      //Read file
+    } else {
+      //List of List<dynamic> === List of list of any types
+      // List.generate(52 elements, Week x + empty)
 
-    List<List<dynamic>> rows =
-        List<List<dynamic>>.generate(52, (index) => ['Week ${index + 1}', '']);
-    csvState.setCSV(const ListToCsvConverter().convert(rows));
-    file.writeAsString(csvState.csv);
+      List<List<dynamic>> rows = List<List<dynamic>>.generate(
+          52, (index) => ['Week ${index + 1}', '']);
+      csvState.setCSV(const ListToCsvConverter().convert(rows));
+      file.writeAsString(csvState.csv);
+    }
+  }
+
+  if (await Directory(path).exists()) {
+    //Read file
+    fileStuff();
+  } else {
+    Directory(path).create().then((Directory newPath) {
+      fileStuff();
+    });
   }
 }
