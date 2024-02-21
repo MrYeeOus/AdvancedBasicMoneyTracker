@@ -17,10 +17,14 @@ class CSVState extends ChangeNotifier {
   }
 }
 
+var _directory;
+var _path;
+var _file;
+
 Future<void> startupCheck(BuildContext context) async {
-  final directory = await getApplicationDocumentsDirectory();
-  final path = "${directory.path}/AdvancedBasicMoneyTracker_V2";
-  final file = File('$path/abmt.csv');
+  _directory = await getApplicationDocumentsDirectory();
+  _path = "${_directory.path}/AdvancedBasicMoneyTracker_V2";
+  _file = File('$_path/abmt.csv');
   // print("File is at: ");
   // print(file.toString);
   // print(path.toString());
@@ -28,7 +32,7 @@ Future<void> startupCheck(BuildContext context) async {
   CSVState csvState = Provider.of<CSVState>(context, listen: false);
 
   void fileStuff() async {
-    if (await file.exists()) {
+    if (await _file.exists()) {
       //Read file
     } else {
       //List of List<dynamic> === List of list of any types
@@ -37,16 +41,27 @@ Future<void> startupCheck(BuildContext context) async {
       List<List<dynamic>> rows = List<List<dynamic>>.generate(
           52, (index) => ['Week ${index + 1}', '']);
       csvState.setCSV(const ListToCsvConverter().convert(rows));
-      file.writeAsString(csvState.csv);
+      _file.writeAsString(csvState.csv);
     }
   }
 
-  if (await Directory(path).exists()) {
+  if (await Directory(_path).exists()) {
     //Read file
     fileStuff();
   } else {
-    Directory(path).create().then((Directory newPath) {
+    Directory(_path).create().then((Directory newPath) {
       fileStuff();
     });
+  }
+}
+
+Future<List<List<dynamic>>> readCSVData() async {
+  if (await _file.exists()) {
+    //^ Which it should by now
+    final csvFile = await _file.readAsString();
+    return CsvToListConverter(eol: "\r\n", fieldDelimiter: ",")
+        .convert(csvFile);
+  } else {
+    throw Exception("File has disappeared!");
   }
 }
