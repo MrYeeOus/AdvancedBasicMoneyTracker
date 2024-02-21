@@ -9,10 +9,23 @@ import 'package:provider/provider.dart';
 
 class CSVState extends ChangeNotifier {
   String _csv = '';
+  List<List<dynamic>> _csvListData = [];
+  List<List<dynamic>> get csvListData => _csvListData;
   String get csv => _csv;
 
   void setCSV(String value) {
     _csv = value;
+    notifyListeners();
+  }
+
+  void setCSVListData(List<List<dynamic>> newList) {
+    _csvListData = newList;
+    notifyListeners();
+  }
+
+  void updateCSVListData(int index, double value) {
+    _csvListData[index][1] = value;
+    print(_csvListData[index].toString());
     notifyListeners();
   }
 }
@@ -25,15 +38,12 @@ Future<void> startupCheck(BuildContext context) async {
   _directory = await getApplicationDocumentsDirectory();
   _path = "${_directory.path}/AdvancedBasicMoneyTracker_V2";
   _file = File('$_path/abmt.csv');
-  // print("File is at: ");
-  // print(file.toString);
-  // print(path.toString());
-  // print(directory.toString());
   CSVState csvState = Provider.of<CSVState>(context, listen: false);
 
   void fileStuff() async {
     if (await _file.exists()) {
       //Read file
+      readCSVData(context);
     } else {
       //List of List<dynamic> === List of list of any types
       // List.generate(52 elements, Week x + empty)
@@ -55,12 +65,15 @@ Future<void> startupCheck(BuildContext context) async {
   }
 }
 
-Future<List<List<dynamic>>> readCSVData() async {
+void readCSVData(BuildContext context) async {
+  //var csvState = context.watch<CSVState>();
+  var csvState = Provider.of<CSVState>(context, listen: false);
   if (await _file.exists()) {
     //^ Which it should by now
     final csvFile = await _file.readAsString();
-    return CsvToListConverter(eol: "\r\n", fieldDelimiter: ",")
-        .convert(csvFile);
+    var data =
+        CsvToListConverter(eol: "\r\n", fieldDelimiter: ",").convert(csvFile);
+    csvState.setCSVListData(data);
   } else {
     throw Exception("File has disappeared!");
   }

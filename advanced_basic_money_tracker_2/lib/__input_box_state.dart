@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:advanced_basic_money_tracker_2/main.dart';
+import 'package:advanced_basic_money_tracker_2/_csvStuff.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,7 @@ class _InputBoxState extends State<InputBox> {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
+    var csvState = context.watch<CSVState>();
     return Padding(
       padding: const EdgeInsets.all(25.0),
       child: Container(
@@ -66,6 +68,7 @@ class _InputBoxState extends State<InputBox> {
                           print(textController.text);
                           appState.updateCurrentSpend(
                               double.tryParse(textController.text) ?? 0.0);
+                          csvState.updateCSVListData(0, 10.0);
                           textController.clear();
                         }
                       },
