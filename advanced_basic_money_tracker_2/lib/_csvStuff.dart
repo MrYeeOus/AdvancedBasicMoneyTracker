@@ -7,10 +7,22 @@ import 'package:path_provider/path_provider.dart';
 import 'package:csv/csv.dart';
 import 'package:provider/provider.dart';
 
+class CSVState extends ChangeNotifier {
+  String _csv = '';
+  String get csv => _csv;
+
+  void setCSV(String value) {
+    _csv = value;
+    notifyListeners();
+  }
+}
+
 Future<void> startupCheck(BuildContext context) async {
   final directory = await getApplicationDocumentsDirectory();
   final path = directory.path;
   final file = File('$path/abmt.csv');
+  print("File is at: ");
+  print(file.toString);
   CSVState csvState = Provider.of<CSVState>(context, listen: false);
 
   if (await file.exists()) {
@@ -23,15 +35,5 @@ Future<void> startupCheck(BuildContext context) async {
         List<List<dynamic>>.generate(52, (index) => ['Week ${index + 1}', '']);
     csvState.setCSV(const ListToCsvConverter().convert(rows));
     file.writeAsString(csvState.csv);
-  }
-}
-
-class CSVState extends ChangeNotifier {
-  String _csv = '';
-  String get csv => _csv;
-
-  void setCSV(String value) {
-    _csv = value;
-    notifyListeners();
   }
 }

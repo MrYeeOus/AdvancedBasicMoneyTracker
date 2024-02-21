@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_print
 
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 
 class WeekListBox extends StatefulWidget {

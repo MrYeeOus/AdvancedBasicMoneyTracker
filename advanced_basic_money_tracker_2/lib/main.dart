@@ -1,8 +1,7 @@
 // ignore_for_file: avoid_print
 
-import 'dart:html';
-
 import 'package:advanced_basic_money_tracker_2/__input_box_state.dart';
+import 'package:advanced_basic_money_tracker_2/_loadingScreen.dart';
 import 'package:advanced_basic_money_tracker_2/_week_list_box.dart';
 import 'package:advanced_basic_money_tracker_2/_csvStuff.dart';
 
@@ -48,17 +47,32 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => MyAppState()),
+        ChangeNotifierProvider(create: (context) => CSVState()),
+      ],
       child: MaterialApp(
         title: "AdvancedBasicMoneyTracker V2",
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.purpleAccent),
         ),
-        home: HomeScreen(),
+        home: LoadingScreen(),
       ),
     );
+
+    // return ChangeNotifierProvider(
+    //   create: (context) => MyAppState(),
+    //   child: MaterialApp(
+    //     title: "AdvancedBasicMoneyTracker V2",
+    //     theme: ThemeData(
+    //       useMaterial3: true,
+    //       colorScheme: ColorScheme.fromSeed(seedColor: Colors.purpleAccent),
+    //     ),
+    //     home: LoadingScreen(),
+    //   ),
+    // );
   }
 }
 
