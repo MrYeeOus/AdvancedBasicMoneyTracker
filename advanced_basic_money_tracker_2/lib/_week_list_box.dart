@@ -15,14 +15,22 @@ class WeekListBox extends StatelessWidget {
       child: ListView(
         children: [
           for (dynamic item in CSVData)
-            Container(
+            Center(
+              child: Container(
                 height: 50,
-                child: Row(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Center(
+                    child: Row(
                   children: [
                     Text("${item[0]}: "),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Text(item[1].toString()),
                   ],
-                ))
+                )),
+              ),
+            )
 
           //Text(item.toString()),
         ],

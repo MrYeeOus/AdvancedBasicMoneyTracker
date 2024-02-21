@@ -15,7 +15,6 @@ class CSVState extends ChangeNotifier {
 
   void setCSV(String value) {
     _csv = value;
-    notifyListeners();
   }
 
   void setCSVListData(List<List<dynamic>> newList) {
@@ -26,7 +25,12 @@ class CSVState extends ChangeNotifier {
   void updateCSVListData(int index, double value) {
     _csvListData[index][1] = value;
     print(_csvListData[index].toString());
+    writeCSVListData();
     notifyListeners();
+  }
+
+  void writeCSVListData() {
+    _file.writeAsString(const ListToCsvConverter().convert(_csvListData));
   }
 }
 
@@ -40,7 +44,7 @@ Future<void> startupCheck(BuildContext context) async {
   _file = File('$_path/abmt.csv');
   CSVState csvState = Provider.of<CSVState>(context, listen: false);
 
-  void fileStuff() async {
+  void createFileStuff() async {
     if (await _file.exists()) {
       //Read file
       readCSVData(context);
@@ -57,10 +61,10 @@ Future<void> startupCheck(BuildContext context) async {
 
   if (await Directory(_path).exists()) {
     //Read file
-    fileStuff();
+    createFileStuff();
   } else {
     Directory(_path).create().then((Directory newPath) {
-      fileStuff();
+      createFileStuff();
     });
   }
 }
