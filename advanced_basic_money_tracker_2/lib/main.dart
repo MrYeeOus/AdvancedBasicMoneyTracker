@@ -17,16 +17,18 @@ void main() {
 }
 
 class MyAppState extends ChangeNotifier {
-  double currentSpend = 0;
+  double _currentSpend = 0;
+  double get currentSpend => _currentSpend;
+
   int currentWeek = 0;
 
-  void getCurrentSpend() {
-    //Thing
+  void updateCurrentSpend(double amount) {
+    _currentSpend += amount;
     notifyListeners();
   }
 
-  void updateCurrentSpend(double amount) {
-    currentSpend += amount;
+  void setCurrentSpend(double amount) {
+    _currentSpend = amount;
     notifyListeners();
   }
 
@@ -127,7 +129,7 @@ class _DisplayBox extends StatelessWidget {
     );
 
     if (picked != null) {
-      csvState.setPickedDate(picked);
+      setPickedDate(context, picked);
     }
   }
 
@@ -135,7 +137,6 @@ class _DisplayBox extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var csvState = context.watch<CSVState>();
-    var currentSpend = appState.currentSpend.toString();
 
     return Padding(
       padding: const EdgeInsets.all(25.0),
@@ -146,7 +147,7 @@ class _DisplayBox extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text("Total This Week: "),
-              Text("\$" + currentSpend),
+              Text("\$${appState.currentSpend}"),
             ],
           ),
           SizedBox(height: 30),

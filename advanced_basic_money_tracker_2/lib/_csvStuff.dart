@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:csv/csv.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:advanced_basic_money_tracker_2/main.dart';
 
 class CSVState extends ChangeNotifier {
   String _csv = '';
@@ -45,15 +46,8 @@ class CSVState extends ChangeNotifier {
     return wn;
   }
 
-  void setPickedWeekNo() {
-    var n = getPickedWeekNo();
-    _currentWeek = n;
+  void doNotifyListeners() {
     notifyListeners();
-  }
-
-  void setPickedDate(DateTime picked) {
-    _pickedDate = picked;
-    setPickedWeekNo();
   }
 }
 
@@ -76,7 +70,7 @@ Future<void> startupCheck(BuildContext context) async {
       // List.generate(52 elements, Week x + empty)
 
       List<List<dynamic>> rows = List<List<dynamic>>.generate(
-          52, (index) => ['Week ${index + 1}', '']);
+          52, (index) => ['Week ${index + 1}', '0.0']);
       csvState.setCSV(const ListToCsvConverter().convert(rows));
       _file.writeAsString(csvState.csv);
     }
@@ -90,9 +84,6 @@ Future<void> startupCheck(BuildContext context) async {
       createFileStuff();
     });
   }
-
-  //Set week number for display and workings
-  csvState.setPickedWeekNo();
 }
 
 void readCSVData(BuildContext context) async {
@@ -107,4 +98,22 @@ void readCSVData(BuildContext context) async {
   } else {
     throw Exception("File has disappeared!");
   }
+  //Set week number for display and workings
+  setPickedDate(context, DateTime.now());
+}
+
+void setPickedDate(BuildContext context, DateTime picked) {
+  var appState = Provider.of<MyAppState>(context, listen: false);
+  var csvState = Provider.of<CSVState>(context, listen: false);
+
+  //From calendar widget
+  csvState._pickedDate = picked;
+  var n = csvState.getPickedWeekNo();
+  csvState._currentWeek = n;
+  csvState.doNotifyListeners();
+
+  var currSpend = csvState._csvListData[n - 1][1];
+  currSpend ??= 0.0;
+  print(currSpend);
+  appState.setCurrentSpend(currSpend);
 }

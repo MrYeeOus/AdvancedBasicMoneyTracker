@@ -41,6 +41,9 @@ class _InputBoxState extends State<InputBox> {
                   Row(
                     children: [
                       Text("How Much: "),
+                      SizedBox(
+                        width: 20,
+                      ),
                       Expanded(
                         child: TextFormField(
                           controller: textController,
