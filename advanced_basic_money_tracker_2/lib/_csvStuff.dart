@@ -41,7 +41,9 @@ class CSVState extends ChangeNotifier {
 
   int getPickedWeekNo() {
     final date = _pickedDate;
-    int wn = ((int.parse(DateFormat('D').format(date)) + 10) / 7).floor();
+    final fir = DateTime(date.year, 1, 1).weekday;
+    int wn =
+        ((int.parse(DateFormat('D').format(date)) + (8 - fir)) / 7).floor();
 
     return wn;
   }
@@ -70,7 +72,7 @@ Future<void> startupCheck(BuildContext context) async {
       // List.generate(52 elements, Week x + empty)
 
       List<List<dynamic>> rows = List<List<dynamic>>.generate(
-          52, (index) => ['Week ${index + 1}', '0.0']);
+          53, (index) => ['Week ${index + 1}', '0.0']);
       csvState.setCSV(const ListToCsvConverter().convert(rows));
       _file.writeAsString(csvState.csv);
     }

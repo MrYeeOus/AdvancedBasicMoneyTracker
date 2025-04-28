@@ -7,10 +7,8 @@ import 'package:advanced_basic_money_tracker_2/_csvStuff.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'dart:io';
 import 'dart:async';
 import 'package:path_provider/path_provider.dart';
-import 'package:csv/csv.dart';
 
 void main() {
   runApp(const MyApp());
@@ -79,11 +77,40 @@ class _HomeScreenState extends State<HomeScreen> {
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text("AdvancedBasicMoneyTracker V2"),
-          backgroundColor: Theme.of(context).primaryColor,
-        ),
+            title: const Text("ABMT V2"),
+            backgroundColor: Theme.of(context).primaryColor,
+            actions: [
+              IconButton(
+                onPressed: () => {
+                  Navigator.push(context,
+                      MaterialPageRoute<void>(builder: (BuildContext context) {
+                    return Scaffold(
+                      appBar: AppBar(
+                        title: const Text("Extras"),
+                      ),
+                      body: Center(
+                          child: Column(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              readCSVData(context);
+                            },
+                            child: Text("Reload csv"),
+                          ),
+                          ElevatedButton(
+                            onPressed: null,
+                            child: Text("Export csv"),
+                          )
+                        ],
+                      )),
+                    );
+                  }))
+                },
+                icon: Icon(Icons.dashboard),
+              ),
+            ]),
         body: Column(children: [
-          const SizedBox(height: 25),
+          const SizedBox(height: 12),
           _TitleBox(),
           //
           _DisplayBox(),
@@ -102,13 +129,14 @@ class _TitleBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Padding(
-        padding: EdgeInsets.all(25.0),
+        padding: EdgeInsets.all(12.0),
         child: Column(
           children: [
             Text("Advanced Really Basic Money Tracker",
                 style: TextStyle(
                   fontSize: 25,
-                )),
+                ),
+                textAlign: TextAlign.center),
             SizedBox(height: 10),
             Text("By Me."),
           ],
