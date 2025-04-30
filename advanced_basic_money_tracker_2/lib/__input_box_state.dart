@@ -62,6 +62,32 @@ class _InputBoxState extends State<InputBox> {
                     ],
                   ),
                   SizedBox(height: 20),
+                  
+                  // 30Apr25
+                  DropdownButton<String>(
+                    value: csvState.selectedCategory,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        csvState.chooseCategory(newValue!);
+                      });
+                    },
+                    items: const [
+                      DropdownMenuItem(
+                        value: 'Necessary',
+                        child: Text('Necessary'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'Frivolous',
+                        child: Text('Frivolous'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'Repayment',
+                        child: Text('Repayment'),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -72,14 +98,22 @@ class _InputBoxState extends State<InputBox> {
                           double getVal =
                               double.tryParse(textController.text) ?? 0.0;
                           appState.updateCurrentSpend(getVal);
+                          //30Apr25
+                          appState.setCurrentAmount(getVal);
                           csvState.updateCSVListData(
-                              csvState.currentWeek - 1, appState.currentSpend);
+                              csvState.currentWeek - 1, appState.currentAmount);
                           textController.clear();
                         }
                       },
                       child: const Text("Ya Go"),
                     ),
                   ),
+
+                  SizedBox(height: 20),
+                  Text(
+                    'Week, Total, Necessary, Frivolous, Repayment',
+                    textAlign: TextAlign.left,
+                  )
                 ],
               ),
             ),

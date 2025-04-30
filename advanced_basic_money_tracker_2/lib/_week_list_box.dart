@@ -23,10 +23,23 @@ class WeekListBox extends StatelessWidget {
                     child: Row(
                   children: [
                     Text("${item[0]}: "),
+      // 30Apr25 - Add extra columns for default: now == {Week, total, necessary, frivolous, repayment}
                     SizedBox(
                       width: 10,
                     ),
                     Text(item[1].toString()),
+                    SizedBox(
+                      width: 40,
+                    ),
+                    Text(item[2].toString()),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(item[3].toString()),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(item[4].toString()),
                   ],
                 )),
               ),

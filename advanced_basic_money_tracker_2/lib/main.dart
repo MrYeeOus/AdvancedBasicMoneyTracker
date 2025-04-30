@@ -18,6 +18,13 @@ class MyAppState extends ChangeNotifier {
   double _currentSpend = 0;
   double get currentSpend => _currentSpend;
 
+  //30Apr25
+  double _currentAmount = 0;
+  double get currentAmount => _currentAmount;
+  void setCurrentAmount(double amount)  {
+    _currentAmount = amount;
+  }
+
   int currentWeek = 0;
 
   void updateCurrentSpend(double amount) {

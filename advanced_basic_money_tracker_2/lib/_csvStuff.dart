@@ -29,8 +29,19 @@ class CSVState extends ChangeNotifier {
   }
 
   void updateCSVListData(int index, double value) {
-    _csvListData[index][1] = value;
-    print(_csvListData[index].toString());
+    _csvListData[index][1] += value;
+    switch(_selectedCategory) {
+      case 'Necessary':
+        _csvListData[index][2] += value;
+        break;
+      case 'Frivolous':
+        _csvListData[index][3] += value;
+        break;
+      case 'Repayment':
+        _csvListData[index][4] += value;
+        break;
+    }
+    //print(_csvListData[index].toString());
     writeCSVListData();
     notifyListeners();
   }
@@ -49,6 +60,38 @@ class CSVState extends ChangeNotifier {
   }
 
   void doNotifyListeners() {
+    notifyListeners();
+  }
+
+
+  //30Apr25
+  List<String> _defaultColumnNames = [
+    'Week',
+    'Total',
+    'Necessary',
+    'Frivolous',
+    'Repayment'
+  ];
+  List<String> get defaultColumnNames => _defaultColumnNames;
+
+  void addColumn(String columnName) {
+    if (!_defaultColumnNames.contains(columnName))  {
+      _defaultColumnNames.add(columnName);
+      notifyListeners();
+    }
+  }
+  void removeColumn(String columnName)  {
+    if (!_defaultColumnNames.contains(columnName))  {
+      _defaultColumnNames.remove(columnName);
+      notifyListeners();
+    }
+  }
+
+  String _selectedCategory = 'Frivolous';
+
+  get selectedCategory => _selectedCategory;
+  void chooseCategory(String category)  {
+    _selectedCategory = category;
     notifyListeners();
   }
 }
@@ -71,14 +114,15 @@ Future<void> startupCheck(BuildContext context) async {
       //List of List<dynamic> === List of list of any types
       // List.generate(52 elements, Week x + empty)
 
+      // 30Apr25 - Add extra columns for default: now == {Week, total, necessary, frivolous, repayment}
       List<List<dynamic>> rows = List<List<dynamic>>.generate(
-          53, (index) => ['Week ${index + 1}', '0.0']);
+          53, (index) => ['Week ${index + 1}', '0.0', '0.0', '0.0', '0.0']);
       csvState.setCSV(const ListToCsvConverter().convert(rows));
       _file.writeAsString(csvState.csv);
     }
   }
 
-  if (await Directory(_path).exists()) {
+  if (await Directory(_path).exists() && !(await _file.exists())) {
     //Read file
     createFileStuff();
   } else {
