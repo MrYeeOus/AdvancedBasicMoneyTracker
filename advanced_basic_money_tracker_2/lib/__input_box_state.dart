@@ -28,7 +28,7 @@ class _InputBoxState extends State<InputBox> {
     var csvState = context.watch<CSVState>();
     return Padding(
       padding: const EdgeInsets.all(25.0),
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
         child: Column(
           children: [
@@ -62,7 +62,7 @@ class _InputBoxState extends State<InputBox> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {

@@ -168,7 +168,7 @@ class _DisplayBox extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(25.0),
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
         child: Column(children: [
           Row(
@@ -179,7 +179,7 @@ class _DisplayBox extends StatelessWidget {
             ],
           ),
           SizedBox(height: 30),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () => {

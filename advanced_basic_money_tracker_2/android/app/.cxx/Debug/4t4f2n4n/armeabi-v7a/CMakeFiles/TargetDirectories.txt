@@ -1,0 +1,2 @@
+C:/AdvancedBasicMoneyTracker/advanced_basic_money_tracker_2/android/app/.cxx/Debug/4t4f2n4n/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/AdvancedBasicMoneyTracker/advanced_basic_money_tracker_2/android/app/.cxx/Debug/4t4f2n4n/armeabi-v7a/CMakeFiles/rebuild_cache.dir
