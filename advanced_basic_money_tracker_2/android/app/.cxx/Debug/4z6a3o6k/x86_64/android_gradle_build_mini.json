@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/home/ben/Downloads/Programs/flutter_sdk/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/home/ben/Android/Sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/media/ben/20Jan20_SSD/Users/yeebe/Desktop/BasicMoneyTracker/AdvancedBasicMoneyTracker2/advanced_basic_money_tracker_2/android/app/.cxx/Debug/4z6a3o6k/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/home/ben/Android/Sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/media/ben/20Jan20_SSD/Users/yeebe/Desktop/BasicMoneyTracker/AdvancedBasicMoneyTracker2/advanced_basic_money_tracker_2/android/app/.cxx/Debug/4z6a3o6k/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

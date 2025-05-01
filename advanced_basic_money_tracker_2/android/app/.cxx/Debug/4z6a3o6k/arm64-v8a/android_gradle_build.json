@@ -1,0 +1,28 @@
+{
+  "buildFiles": [
+    "/home/ben/Downloads/Programs/flutter_sdk/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/home/ben/Android/Sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/media/ben/20Jan20_SSD/Users/yeebe/Desktop/BasicMoneyTracker/AdvancedBasicMoneyTracker2/advanced_basic_money_tracker_2/android/app/.cxx/Debug/4z6a3o6k/arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/home/ben/Android/Sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/media/ben/20Jan20_SSD/Users/yeebe/Desktop/BasicMoneyTracker/AdvancedBasicMoneyTracker2/advanced_basic_money_tracker_2/android/app/.cxx/Debug/4z6a3o6k/arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {},
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/home/ben/Android/Sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/home/ben/Android/Sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": []
+}
